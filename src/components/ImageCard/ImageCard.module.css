@@ -1,7 +1,3 @@
-.pictureItem {
-  width: calc((100% - 28px) / 3);
-}
-
 .pictureContainer {
   height: 320px;
   width: 100%;

@@ -1,15 +1,26 @@
 import { BsSearch } from "react-icons/bs";
+import toast from "react-hot-toast";
 import style from "./SearchBar.module.css";
 
 const SearchBar = ({ onSubmit }) => {
   const handleFormSubmit = (event) => {
+    const notify = () =>
+      toast.error("Search field is empty. Please put text into field.", {
+        duration: 2000,
+        position: "top-right",
+        style: {
+          backgroundColor: "#a81b1b",
+          color: "#ffffff",
+        },
+      });
     event.preventDefault();
     const form = event.target;
-    const inputValue = form.search.value;
+    const inputValue = form.search.value.trim();
     if (inputValue === "") {
-      return;
+      notify();
+    } else {
+      onSubmit(inputValue);
     }
-    onSubmit(inputValue);
     form.reset();
   };
 

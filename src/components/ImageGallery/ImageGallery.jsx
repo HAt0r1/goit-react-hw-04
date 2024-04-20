@@ -5,7 +5,13 @@ import style from "./ImageGallery.module.css";
 const ImageGallery = ({ items }) => {
   return (
     <ul className={style.list}>
-      <ImageCard items={items} />
+      {items.map(({ id, alt_description, urls: { small } }) => {
+        return (
+          <li className={style.pictureItem} key={id}>
+            <ImageCard pic={small} alt={alt_description} />
+          </li>
+        );
+      })}
     </ul>
   );
 };

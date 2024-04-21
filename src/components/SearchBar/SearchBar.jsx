@@ -4,7 +4,10 @@ import style from "./SearchBar.module.css";
 
 const SearchBar = ({ onSubmit }) => {
   const handleFormSubmit = (event) => {
-    const notify = () =>
+    event.preventDefault();
+    const form = event.target;
+    const inputValue = form.search.value.trim();
+    if (inputValue === "") {
       toast.error("Search field is empty. Please put text into field.", {
         duration: 2000,
         position: "top-right",
@@ -13,11 +16,6 @@ const SearchBar = ({ onSubmit }) => {
           color: "#ffffff",
         },
       });
-    event.preventDefault();
-    const form = event.target;
-    const inputValue = form.search.value.trim();
-    if (inputValue === "") {
-      notify();
     } else {
       onSubmit(inputValue);
     }

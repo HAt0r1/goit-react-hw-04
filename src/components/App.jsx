@@ -8,13 +8,18 @@ import Loader from "./Loader/Loader";
 import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "./ImageModal/ImageModal";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
+  // State variables
   const [pictures, setPictures] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [keyWord, setKeyWord] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   const handleSubmit = async (value) => {
     setPictures([]);
@@ -47,12 +52,29 @@ const App = () => {
     setPage(page + 1);
   };
 
-  console.log(pictures);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = (event) => {
+    // eslint-disable-next-line no-constant-condition
+    if ((event.key = "ESC" || event.target === event.currentTarget)) {
+      setIsOpen(false);
+    }
+  };
 
   return (
     <>
+      <ImageModal openState={isOpen} data={modalData} closeState={closeModal} />
+      <Toaster position="top-right" />
       <SearchBar onSubmit={handleSubmit} />
-      {pictures.length > 0 && <ImageGallery items={pictures} />}
+      {pictures.length > 0 && (
+        <ImageGallery
+          modalData={setModalData}
+          onOpen={openModal}
+          items={pictures}
+        />
+      )}
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
       {pictures.length > 0 && page >= 1 && (

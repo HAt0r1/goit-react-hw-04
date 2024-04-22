@@ -52,13 +52,16 @@ const App = () => {
     setPage(page + 1);
   };
 
+  const handleModalData = (urlValue, altValue) => {
+    setModalData({ url: urlValue, alt: altValue });
+  };
+
   const openModal = () => {
     setIsOpen(true);
   };
 
   const closeModal = (event) => {
-    // eslint-disable-next-line no-constant-condition
-    if ((event.key = "ESC" || event.target === event.currentTarget)) {
+    if (event.key === "ESC" || event.target === event.currentTarget) {
       setIsOpen(false);
     }
   };
@@ -70,7 +73,7 @@ const App = () => {
       <SearchBar onSubmit={handleSubmit} />
       {pictures.length > 0 && (
         <ImageGallery
-          modalData={setModalData}
+          modalFunc={handleModalData}
           onOpen={openModal}
           items={pictures}
         />

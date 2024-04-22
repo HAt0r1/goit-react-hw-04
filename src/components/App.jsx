@@ -52,12 +52,9 @@ const App = () => {
     setPage(page + 1);
   };
 
-  const handleModalData = (urlValue, altValue) => {
-    setModalData({ url: urlValue, alt: altValue });
-  };
-
-  const openModal = () => {
+  const openModal = (url, alt) => {
     setIsOpen(true);
+    setModalData({ url, alt });
   };
 
   const closeModal = (event) => {
@@ -72,11 +69,7 @@ const App = () => {
       <Toaster position="top-right" />
       <SearchBar onSubmit={handleSubmit} />
       {pictures.length > 0 && (
-        <ImageGallery
-          modalFunc={handleModalData}
-          onOpen={openModal}
-          items={pictures}
-        />
+        <ImageGallery onOpen={openModal} items={pictures} />
       )}
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
